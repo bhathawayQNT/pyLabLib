@@ -213,8 +213,9 @@ class BasicKinesisDevice(comm_backend.ICommBackendWrapper):
             return True
         if model_no.startswith(port_model_no):
             return True
-        if re.match("^"+port_model_no+"$",model_no):
-            return True
+        for model in port_model_no.split("|"):
+            if re.match("^"+port_model_no+"$",model_no):
+                return True
         return False
     def get_device_info(self, dest="host"):
         """
