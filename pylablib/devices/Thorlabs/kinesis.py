@@ -1313,9 +1313,13 @@ class KinesisMotor(KinesisDevice):
             return (ssc,ssc*time_conv*2**16,ssc*time_conv**2*2**16),units
         if self._model in ["TST001","MST601"] or self._model.startswith("BSC00") or self._model.startswith("BSC10") or self._model.startswith("MPC"):
             return (ssc,ssc,ssc),units
-        if self._model in ["TST101","KST101","MST602","K10CR1"] or self._model.startswith("BSC20"):
+        if self._model in ["TST101","KST101","MST602","K10CR1"]:
             vpr=53.68
             avr=204.94E-6
+            return (ssc,ssc*vpr,ssc*vpr*avr),units
+        if self._model.startswith("BSC20") or self._model.startswith("SCC20"):
+            vpr=8.26
+            avr=3.15E-05
             return (ssc,ssc*vpr,ssc*vpr*avr),units
         warnings.warn("can't recognize motor model {}; setting all scales to internal units".format(self._model))
         return (1,1,1),"internal"
