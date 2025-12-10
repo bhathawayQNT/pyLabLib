@@ -1319,7 +1319,7 @@ class KinesisMotor(KinesisDevice):
             return (ssc,ssc*vpr,ssc*vpr*avr),units
         if self._model.startswith("BSC20") or self._model.startswith("SCC20"):
             vpr=8.26
-            avr=3.15E-05
+            avr=204.94E-6
             return (ssc,ssc*vpr,ssc*vpr*avr),units
         warnings.warn("can't recognize motor model {}; setting all scales to internal units".format(self._model))
         return (1,1,1),"internal"
