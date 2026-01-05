@@ -1240,7 +1240,7 @@ class KinesisMotor(KinesisDevice):
         stage=stage.strip().upper()
         if stage=="STEP":
             return 1,"step"
-        if stage in {"M30"}:
+        if self._model.startswith("M30"):
             return 1E7, "m"
         if stage in {"MTS25-Z8","MTS50-Z8","Z806","Z812","Z825"}:
             return 34304E3,"m"
@@ -1252,7 +1252,7 @@ class KinesisMotor(KinesisDevice):
             return 12288E3,"m"
         if stage in {"DDSM50","DDSM100"}:
             return 2000E3,"m"
-        if stage in {"DDS220","DDS300","DDS600","MLS203", "KVS30"}:
+        if stage in {"DDS220","DDS300","DDS600","MLS203"} or self._model.startswith("KVS30"):
             return 20000E3,"m"
         if stage=="DDR100":
             return 3276800/360,"deg"
@@ -1262,7 +1262,7 @@ class KinesisMotor(KinesisDevice):
             return 1440000/360,"deg"
         if stage=="HDR50":
             return 75091/0.99997,"deg"
-        if self._model in ["TST001","MST601"] or self._model.startswith("BSC00") or self._model.startswith("BSC10"):
+        if self._model in ["TST001","MST601"] or self._model.startswith(("BSC00", "BSC10")):
             if stage.startswith("ZST"):
                 return 125540.35E3,"m"
             if stage.startswith("ZFS"):
@@ -1277,7 +1277,7 @@ class KinesisMotor(KinesisDevice):
                 return 25600/360,"deg"
             if stage=="NR360":
                 return 25600/(360/66),"deg"
-        if self._model in ["TST101","KST101","MST602","K10CR1"] or self._model.startswith("BSC20") or self._model.startswith("SSC20"):
+        if self._model in ["TST101","KST101","MST602","K10CR1"] or self._model.startswith(("BSC20", "SSC20")):
             if stage.startswith("ZST"):
                 return 2008645.63E3,"m"
             if stage.startswith("ZFS"):
@@ -1313,7 +1313,7 @@ class KinesisMotor(KinesisDevice):
         if self._model in ["TBD001","KBD101"] or self._model.startswith("BBD10") or self._model.startswith("BBD20"):
             time_conv=102.4E-6
             return (ssc,ssc*time_conv*2**16,ssc*time_conv**2*2**16),units
-        if self._model in ["TST001","MST601", "M30", "KVS30"] or self._model.startswith("BSC") or self._model.startswith("MPC"):
+        if self._model in ["TST001","MST601"] or self._model.startswith(("BSC", "MPC", "M30", "KVS30")):
             return (ssc,ssc,ssc),units
         if self._model in ["TST101","KST101","MST602","K10CR1"]:
             vpr=53.68
