@@ -1240,6 +1240,8 @@ class KinesisMotor(KinesisDevice):
         stage=stage.strip().upper()
         if stage=="STEP":
             return 1,"step"
+        if stage in {"M30"}:
+            return 1E7, "m"
         if stage in {"MTS25-Z8","MTS50-Z8","Z806","Z812","Z825"}:
             return 34304E3,"m"
         if stage in {"Z606","Z612","Z625"}:
@@ -1250,7 +1252,7 @@ class KinesisMotor(KinesisDevice):
             return 12288E3,"m"
         if stage in {"DDSM50","DDSM100"}:
             return 2000E3,"m"
-        if stage in {"DDS220","DDS300","DDS600","MLS203"}:
+        if stage in {"DDS220","DDS300","DDS600","MLS203", "KVS30"}:
             return 20000E3,"m"
         if stage=="DDR100":
             return 3276800/360,"deg"
@@ -1311,7 +1313,7 @@ class KinesisMotor(KinesisDevice):
         if self._model in ["TBD001","KBD101"] or self._model.startswith("BBD10") or self._model.startswith("BBD20"):
             time_conv=102.4E-6
             return (ssc,ssc*time_conv*2**16,ssc*time_conv**2*2**16),units
-        if self._model in ["TST001","MST601"] or self._model.startswith("BSC00") or self._model.startswith("BSC10") or self._model.startswith("MPC"):
+        if self._model in ["TST001","MST601", "M30", "KVS30"] or self._model.startswith("BSC") or self._model.startswith("MPC"):
             return (ssc,ssc,ssc),units
         if self._model in ["TST101","KST101","MST602","K10CR1"]:
             vpr=53.68
