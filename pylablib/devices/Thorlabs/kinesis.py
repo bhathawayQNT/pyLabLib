@@ -1226,7 +1226,7 @@ class KinesisMotor(KinesisDevice):
             stages={2:"Z706",3:"Z712",4:"Z725",5:"CR1-Z7",6:"PRM1-Z8",
                     7:"MTS25-Z8",8:"MTS50-Z8",9:"Z825",10:"Z812",11:"Z806"}
             return stages.get(stage_id,None)
-        if self._model=="K10CR1" or self._model.startswith("MPC"):
+        if self._model=="K10CR1" or self._model.startswith(("MPC", "M30", "KVS30")):
             return self._model
         return None
     def _get_stage(self, scale):
